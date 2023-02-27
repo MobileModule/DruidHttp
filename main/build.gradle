@@ -45,5 +45,5 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     implementation dependenciesList.Appcompat
-    implementation project(':druidhttp')
+    implementation project(':httplib')
 }
