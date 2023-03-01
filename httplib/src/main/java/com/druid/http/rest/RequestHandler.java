@@ -1,6 +1,7 @@
 package com.druid.http.rest;
 
 import com.druid.http.DruidHttpHeaders;
+import com.druid.http.DruidHttpLogger;
 import com.druid.http.HttpCode;
 
 import java.util.Iterator;
@@ -37,6 +38,7 @@ public class RequestHandler {
             httpResponse.setContent("response " + ex.getMessage());
         }
         httpResponse.setRequest(request);
+        DruidHttpLogger.iContent(DruidHttpLogger.class.getName(), httpResponse.toString());
         return httpResponse;
     }
 

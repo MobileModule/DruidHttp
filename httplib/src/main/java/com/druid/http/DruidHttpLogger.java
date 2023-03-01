@@ -37,9 +37,9 @@ public class DruidHttpLogger {
         SDebug = debug;
     }
 
-    public static void wContent(String msg) {
+    public static void iContent(String tag, String msg) {
         if (SDebug) {
-            print(W, msg);
+            print(I, tag, msg);
         }
     }
 
@@ -117,6 +117,10 @@ public class DruidHttpLogger {
 
     private static void print(String method, Object o) {
         print(method, STag, toString(o));
+    }
+
+    private static void printTag(String method, String tag, Object o) {
+        print(method, tag, toString(o));
     }
 
     private static String toString(Object o) {

@@ -1,6 +1,9 @@
 package com.druid.http.rest;
 
+import android.text.TextUtils;
+
 import com.druid.http.DruidHttpHeaders;
+import com.druid.http.DruidHttpLogger;
 
 import java.io.Serializable;
 
@@ -55,7 +58,32 @@ public class DruidHttpResponse implements Serializable {
         return request;
     }
 
+
+    @Override
     public String toString() {
-        return com.alibaba.fastjson.JSON.toJSONString(this);
+        return "tag:" + request.getCancelSign() + "," +
+                "url:" + request.getUrl() + "," +
+                "respondCode:" + code_ + "," +
+                "content:" + content_+","+
+                "requestBody:" + request.getJsonBodyContent();
     }
+
+    public String getCancelTag(){
+        String tag= DruidHttpLogger.class.getName();
+        try {
+            Object cancelTag = request.getCancelSign();
+            if (cancelTag != null) {
+                if (cancelTag instanceof String) {
+                    String tagStr = (String) cancelTag;
+                    if (!TextUtils.isEmpty(tagStr)) {
+                        tag = tagStr;
+                    }
+                }
+            }
+        }catch (Exception ex){
+
+        }
+        return tag;
+    }
+
 }

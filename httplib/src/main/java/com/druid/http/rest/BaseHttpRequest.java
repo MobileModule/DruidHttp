@@ -34,7 +34,7 @@ public abstract class BaseHttpRequest implements Comparable<BaseHttpRequest>, Ca
         this.url = url;
         mRequestMethod = requestMethod;
         mHeaders = new DruidHttpHeaders();
-        if(!TextUtils.isEmpty(mUserAgent)) {
+        if (!TextUtils.isEmpty(mUserAgent)) {
             mHeaders.set(DruidHttpHeaders.HEAD_KEY_USER_AGENT, mUserAgent);
         }
         MultiValueMap<String, String> globalHeaders = DruidHttp.getInitializeConfig().getHeaders();
@@ -307,6 +307,10 @@ public abstract class BaseHttpRequest implements Comparable<BaseHttpRequest>, Ca
     public void cancelBySign(Object sign) {
         if (mCancelSign == sign || (sign != null && mCancelSign != null && mCancelSign.equals(sign)))
             cancel();
+    }
+
+    public Object getCancelSign() {
+        return mCancelSign;
     }
 
     /**
