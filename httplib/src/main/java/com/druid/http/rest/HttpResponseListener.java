@@ -103,6 +103,7 @@ public class HttpResponseListener implements OnResponseListener {
     }
 
     private void success(DruidHttpResponse response) {
+        boolean hasCallBack = false;
         if (mContext != null) {
             try {
                 if (mContext instanceof Activity) {
@@ -113,16 +114,18 @@ public class HttpResponseListener implements OnResponseListener {
                             if (callback != null) {
                                 callback.onSucceed(what, response);
                             }
-                            return;
                         }
                     });
+                    hasCallBack = true;
                 }
             } catch (Exception ex) {
 
             }
         }
-        if (callback != null) {
-            callback.onSucceed(what, response);
+        if (hasCallBack == false) {
+            if (callback != null) {
+                callback.onSucceed(what, response);
+            }
         }
     }
 
@@ -135,6 +138,7 @@ public class HttpResponseListener implements OnResponseListener {
     }
 
     private void failed(DruidHttpResponse response) {
+        boolean hasCallBack = false;
         if (mContext != null) {
             try {
                 if (mContext instanceof Activity) {
@@ -145,16 +149,18 @@ public class HttpResponseListener implements OnResponseListener {
                             if (callback != null) {
                                 callback.onFailed(what, response);
                             }
-                            return;
                         }
                     });
+                    hasCallBack = true;
                 }
             } catch (Exception ex) {
 
             }
         }
-        if (callback != null) {
-            callback.onFailed(what, response);
+        if (hasCallBack == false) {
+            if (callback != null) {
+                callback.onFailed(what, response);
+            }
         }
     }
 
