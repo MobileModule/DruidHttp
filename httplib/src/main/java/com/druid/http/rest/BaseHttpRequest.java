@@ -34,7 +34,9 @@ public abstract class BaseHttpRequest implements Comparable<BaseHttpRequest>, Ca
         this.url = url;
         mRequestMethod = requestMethod;
         mHeaders = new DruidHttpHeaders();
-        mHeaders.set(DruidHttpHeaders.HEAD_KEY_USER_AGENT, mUserAgent);
+        if(!TextUtils.isEmpty(mUserAgent)) {
+            mHeaders.set(DruidHttpHeaders.HEAD_KEY_USER_AGENT, mUserAgent);
+        }
         MultiValueMap<String, String> globalHeaders = DruidHttp.getInitializeConfig().getHeaders();
         for (Map.Entry<String, List<String>> headersEntry : globalHeaders.entrySet()) {
             String key = headersEntry.getKey();

@@ -37,6 +37,12 @@ public class DruidHttpLogger {
         SDebug = debug;
     }
 
+    public static void wContent(String msg) {
+        if (SDebug) {
+            print(W, msg);
+        }
+    }
+
     public static void i(Object msg) {
         print(I, msg);
     }

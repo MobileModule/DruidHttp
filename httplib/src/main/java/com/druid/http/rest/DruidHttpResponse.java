@@ -54,4 +54,8 @@ public class DruidHttpResponse implements Serializable {
     public DruidHttpRequest getRequest() {
         return request;
     }
+
+    public String toString() {
+        return com.alibaba.fastjson.JSON.toJSONString(this);
+    }
 }

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 
 import com.druid.http.DruidHttp;
 import com.druid.http.DruidHttpHeaders;
+import com.druid.http.DruidHttpLogger;
 import com.druid.http.HttpListener;
 import com.druid.http.HttpReqDialog;
 import com.druid.http.R;
@@ -86,6 +87,7 @@ public class HttpResponseListener implements OnResponseListener {
 
     @Override
     public void onSucceed(int what, DruidHttpResponse response) {
+        DruidHttpLogger.wContent(response.toString());
         int responseCode = response.code();
         //
         if (responseCode == 401) {
@@ -130,6 +132,7 @@ public class HttpResponseListener implements OnResponseListener {
      */
     @Override
     public void onFailed(int what, DruidHttpResponse response) {
+        DruidHttpLogger.wContent(response.toString());
         failed(response);
     }
 

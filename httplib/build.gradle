@@ -27,6 +27,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar', "*.aar"])
     implementation dependenciesList.Okhttp3
     implementation dependenciesList.DimenX2
+    implementation dependenciesList.Fastjson
 }
 
 afterEvaluate {
