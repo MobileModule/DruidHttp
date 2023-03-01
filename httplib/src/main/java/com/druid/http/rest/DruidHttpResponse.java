@@ -61,15 +61,15 @@ public class DruidHttpResponse implements Serializable {
 
     @Override
     public String toString() {
-        return "tag:" + request.getCancelSign() + "," +
-                "url:" + request.getUrl() + "," +
-                "respondCode:" + code_ + "," +
-                "content:" + content_+","+
-                "requestBody:" + request.getJsonBodyContent();
+        return "tag:【" + request.getCancelSign() + "】," +
+                "url:【" + request.getUrl() + "】," +
+                "respondCode:【" + code_ + "】," +
+                "content:【" + content_ + "】," +
+                "requestBody:【" + request.getJsonBodyContent() + "】";
     }
 
-    public String getCancelTag(){
-        String tag= DruidHttpLogger.class.getName();
+    public String getCancelTag() {
+        String tag = DruidHttpLogger.class.getName();
         try {
             Object cancelTag = request.getCancelSign();
             if (cancelTag != null) {
@@ -80,7 +80,7 @@ public class DruidHttpResponse implements Serializable {
                     }
                 }
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
         return tag;
