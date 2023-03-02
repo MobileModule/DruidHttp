@@ -79,7 +79,10 @@ public class HttpResponseListener implements OnResponseListener {
     /**
      * 开始请求, 这里显示一个dialog.
      */
+    @Override
     public void onStart(int what) {
+        DruidHttpLogger.iContent(mRequest.getCancelTag(), "url:" +mRequest.getUrl() + "-->time-http-onStart:" + System.currentTimeMillis());
+
         if (mWaitDialog != null && !mWaitDialog.isDialogShowing()) {
             mWaitDialog.dialogShow();
         }
@@ -87,6 +90,7 @@ public class HttpResponseListener implements OnResponseListener {
 
     @Override
     public void onSucceed(int what, DruidHttpResponse response) {
+        DruidHttpLogger.iContent(response.getCancelTag(), "url:" + response.getRequest().getUrl() + "-->time-http-callback:" + System.currentTimeMillis());
         int responseCode = response.code();
         //
         if (responseCode == 401) {
@@ -134,6 +138,8 @@ public class HttpResponseListener implements OnResponseListener {
      */
     @Override
     public void onFailed(int what, DruidHttpResponse response) {
+        DruidHttpLogger.iContent(response.getCancelTag(), "url:" + response.getRequest().getUrl() + "-->time-http-callback:" + System.currentTimeMillis());
+
         failed(response);
     }
 
@@ -169,6 +175,7 @@ public class HttpResponseListener implements OnResponseListener {
      */
     @Override
     public void onFinish(int what) {
+        DruidHttpLogger.iContent(mRequest.getCancelTag(), "url:" +mRequest.getUrl() + "-->time-http-onFinish:" + System.currentTimeMillis());
         if (mWaitDialog != null && mWaitDialog.isDialogShowing()) {
             mWaitDialog.dialogStop();
         }

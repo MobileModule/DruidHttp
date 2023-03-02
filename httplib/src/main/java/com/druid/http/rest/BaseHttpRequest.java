@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.druid.http.DruidHttp;
 import com.druid.http.DruidHttpHeaders;
+import com.druid.http.DruidHttpLogger;
 import com.druid.http.HttpJSONBody;
 import com.druid.http.HttpReqDialog;
 import com.druid.http.Params;
@@ -311,6 +312,24 @@ public abstract class BaseHttpRequest implements Comparable<BaseHttpRequest>, Ca
 
     public Object getCancelSign() {
         return mCancelSign;
+    }
+
+    public String getCancelTag() {
+        String tag = DruidHttpLogger.class.getName();
+        try {
+            Object cancelTag = mCancelSign;
+            if (cancelTag != null) {
+                if (cancelTag instanceof String) {
+                    String tagStr = (String) cancelTag;
+                    if (!TextUtils.isEmpty(tagStr)) {
+                        tag = tagStr;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+
+        }
+        return tag;
     }
 
     /**

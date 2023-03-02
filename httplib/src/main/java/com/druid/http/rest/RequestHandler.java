@@ -19,7 +19,11 @@ public class RequestHandler {
     }
 
     public DruidHttpResponse handle(DruidHttpRequest request) {
+        long start_time = System.currentTimeMillis();
+        DruidHttpLogger.iContent(request.getCancelTag(), "url:" + request.getUrl() + "-->time-http-start:" + start_time);
         Response response = request.execute();//同步请求
+        long end_time = System.currentTimeMillis();
+        DruidHttpLogger.iContent(request.getCancelTag(), "url:" + request.getUrl() + "-->time-http-end:" + end_time + "-->time-diff:" + (end_time - start_time));
         final DruidHttpResponse httpResponse = new DruidHttpResponse();
         try {
             if (response != null) {
