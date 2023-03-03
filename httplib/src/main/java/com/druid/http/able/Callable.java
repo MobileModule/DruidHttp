@@ -1,10 +1,10 @@
 package com.druid.http.able;
 
 
-import okhttp3.Response;
+import com.druid.http.OkHttpCallBack;
 
 public interface Callable {
     void cancel();
 
-    Response execute();
+    void execute(OkHttpCallBack callBack);
 }

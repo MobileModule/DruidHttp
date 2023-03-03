@@ -17,7 +17,7 @@ import java.util.List;
 
 public class HttpResponseListener implements OnResponseListener {
 
-    private Context mContext;
+    private Activity mContext;
     /**
      * Dialog.
      */
@@ -40,7 +40,7 @@ public class HttpResponseListener implements OnResponseListener {
      * @param canCancel    是否允许用户取消请求.
      * @param isLoading    是否显示dialog.
      */
-    public HttpResponseListener(Context context, DruidHttpRequest request, HttpListener httpCallback,
+    public HttpResponseListener(Activity context, DruidHttpRequest request, HttpListener httpCallback,
                                 int what, boolean canCancel, boolean isLoading) {
         this.mContext = context;
         this.what = what;
@@ -58,7 +58,7 @@ public class HttpResponseListener implements OnResponseListener {
         this.callback = httpCallback;
     }
 
-    public HttpResponseListener(Context context, DruidHttpRequest request, HttpListener httpCallback,
+    public HttpResponseListener(Activity context, DruidHttpRequest request, HttpListener httpCallback,
                                 int what, boolean canCancel, boolean isLoading, String message) {
         this.mContext = context;
         this.what = what;
@@ -81,8 +81,7 @@ public class HttpResponseListener implements OnResponseListener {
      */
     @Override
     public void onStart(int what) {
-        DruidHttpLogger.iContent(mRequest.getCancelTag(), "url:" +mRequest.getUrl() + "-->time-http-onStart:" + System.currentTimeMillis());
-
+        DruidHttpLogger.iContent(mRequest.getCancelTag(), "url:" + mRequest.getUrl() + "-->time-http-onStart:" + System.currentTimeMillis());
         if (mWaitDialog != null && !mWaitDialog.isDialogShowing()) {
             mWaitDialog.dialogShow();
         }
@@ -107,27 +106,15 @@ public class HttpResponseListener implements OnResponseListener {
     }
 
     private void success(DruidHttpResponse response) {
-        boolean hasCallBack = false;
-        if (mContext != null) {
-            try {
-                if (mContext instanceof Activity) {
-                    Activity activity = (Activity) mContext;
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (callback != null) {
-                                callback.onSucceed(what, response);
-                            }
-                        }
-                    });
-                    hasCallBack = true;
-                }
-            } catch (Exception ex) {
-
-            }
-        }
-        if (hasCallBack == false) {
-            if (callback != null) {
+        if (callback != null) {
+            if(mContext!=null) {
+                mContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSucceed(what, response);
+                    }
+                });
+            }else {
                 callback.onSucceed(what, response);
             }
         }
@@ -138,33 +125,23 @@ public class HttpResponseListener implements OnResponseListener {
      */
     @Override
     public void onFailed(int what, DruidHttpResponse response) {
-        DruidHttpLogger.iContent(response.getCancelTag(), "url:" + response.getRequest().getUrl() + "-->time-http-callback:" + System.currentTimeMillis());
-
-        failed(response);
+        if (response != null) {
+            DruidHttpLogger.iContent(response.getCancelTag(), "url:" +
+                    response.getRequest().getUrl() + "-->time-http-callback:" + System.currentTimeMillis());
+            failed(response);
+        }
     }
 
     private void failed(DruidHttpResponse response) {
-        boolean hasCallBack = false;
-        if (mContext != null) {
-            try {
-                if (mContext instanceof Activity) {
-                    Activity activity = (Activity) mContext;
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (callback != null) {
-                                callback.onFailed(what, response);
-                            }
-                        }
-                    });
-                    hasCallBack = true;
-                }
-            } catch (Exception ex) {
-
-            }
-        }
-        if (hasCallBack == false) {
-            if (callback != null) {
+        if (callback != null) {
+            if(mContext!=null) {
+                mContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onFailed(what, response);
+                    }
+                });
+            }else {
                 callback.onFailed(what, response);
             }
         }
@@ -175,7 +152,7 @@ public class HttpResponseListener implements OnResponseListener {
      */
     @Override
     public void onFinish(int what) {
-        DruidHttpLogger.iContent(mRequest.getCancelTag(), "url:" +mRequest.getUrl() + "-->time-http-onFinish:" + System.currentTimeMillis());
+        DruidHttpLogger.iContent(mRequest.getCancelTag(), "url:" + mRequest.getUrl() + "-->time-http-onFinish:" + System.currentTimeMillis());
         if (mWaitDialog != null && mWaitDialog.isDialogShowing()) {
             mWaitDialog.dialogStop();
         }

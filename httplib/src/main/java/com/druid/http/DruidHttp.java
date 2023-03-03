@@ -45,7 +45,6 @@ public class DruidHttp {
         return requestQueue;
     }
 
-
     public static DruidHttpRequest createRequest(String url, RequestMethod requestMethod) {
         return new HttpStringRequest(url, requestMethod);
     }

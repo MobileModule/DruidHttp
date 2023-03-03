@@ -1,6 +1,7 @@
 package com.druid.http.rest;
 
 import com.druid.http.DruidHttpLogger;
+import com.druid.http.OkHttpCallBack;
 import com.druid.http.RequestMethod;
 
 import okhttp3.Response;
@@ -16,15 +17,13 @@ public abstract class DruidHttpRequest extends BaseHttpRequest {
     }
 
     @Override
-    public Response execute() {
-        setRequestCall(getHttpClient().newCall(getRequestBuilder()));
-        Response response = null;
+    public void execute(OkHttpCallBack callBack) {
+        setRequestCall(AsyncRequestClient.INSTANCE.getClient().newCall(getRequestBuilder()));
         try {
-            response = getRequestCall().execute();
+            getRequestCall().enqueue(callBack);
         } catch (Exception ex) {
             DruidHttpLogger.e("http request error--->" + ex.getMessage());
         }
-        return response;
     }
 
 

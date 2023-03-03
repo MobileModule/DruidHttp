@@ -1,6 +1,5 @@
 package com.druid.http.rest;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -30,7 +29,7 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-public abstract class BaseHttpRequest implements Comparable<BaseHttpRequest>, Callable, Startable, Cancelable, Finishable {
+public abstract class BaseHttpRequest implements  Callable, Startable, Cancelable, Finishable {
     public BaseHttpRequest(String url, RequestMethod requestMethod) {
         this.url = url;
         mRequestMethod = requestMethod;
@@ -105,15 +104,7 @@ public abstract class BaseHttpRequest implements Comparable<BaseHttpRequest>, Ca
         }
     }
 
-    protected OkHttpClient getHttpClient() {
-        return new OkHttpClient.Builder()
-                .sslSocketFactory(getSSLSocketFactory())
-                .followRedirects(getFollowRedirects())
-                .hostnameVerifier(getHostnameVerifier())
-                .connectTimeout(mConnectTimeout, TimeUnit.MILLISECONDS)
-                .readTimeout(mReadTimeout, TimeUnit.MILLISECONDS)
-                .build();
-    }
+
 
     private Call requestCall = null;
 
@@ -378,12 +369,12 @@ public abstract class BaseHttpRequest implements Comparable<BaseHttpRequest>, Ca
         return isCanceled;
     }
 
-    @Override
-    public final int compareTo(BaseHttpRequest another) {
-        final Priority me = getPriority();
-        final Priority it = another.getPriority();
-        return me == it ? getSequence() - another.getSequence() : it.ordinal() - me.ordinal();
-    }
+//    @Override
+//    public final int compareTo(BaseHttpRequest another) {
+//        final Priority me = getPriority();
+//        final Priority it = another.getPriority();
+//        return me == it ? getSequence() - another.getSequence() : it.ordinal() - me.ordinal();
+//    }
 
     private HttpsLoadingDialog loadingDialog = null;
 
