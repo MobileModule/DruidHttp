@@ -105,16 +105,6 @@ public abstract class BaseHttpRequest implements Comparable<BaseHttpRequest>, Ca
         }
     }
 
-    protected OkHttpClient getHttpClient() {
-        return new OkHttpClient.Builder()
-                .sslSocketFactory(getSSLSocketFactory())
-                .followRedirects(getFollowRedirects())
-                .hostnameVerifier(getHostnameVerifier())
-                .connectTimeout(mConnectTimeout, TimeUnit.MILLISECONDS)
-                .readTimeout(mReadTimeout, TimeUnit.MILLISECONDS)
-                .build();
-    }
-
     private Call requestCall = null;
 
     public void setRequestCall(Call call) {

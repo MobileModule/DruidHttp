@@ -17,7 +17,7 @@ public abstract class DruidHttpRequest extends BaseHttpRequest {
 
     @Override
     public Response execute() {
-        setRequestCall(getHttpClient().newCall(getRequestBuilder()));
+        setRequestCall(AsyncRequestClient.INSTANCE.getClient().newCall(getRequestBuilder()));
         Response response = null;
         try {
             response = getRequestCall().execute();
