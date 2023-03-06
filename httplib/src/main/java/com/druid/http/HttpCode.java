@@ -1,7 +1,7 @@
 package com.druid.http;
 
 public class HttpCode {
-    public static final int HTTP_LIB_ERROR = 81683078;//网络框架错误
+    public static final int HTTP_LIB_ERROR = 0;//网络框架错误
     public static final int Continue = 100;//		继续。客户端应继续其请求
     public static final int Switching_Protocols = 101;//	切换协议。服务器根据客户端的请求切换协议。只能切换到更高级的协议，例如，切换到HTTP的新版本协议
     public static final int OK = 200;//请求成功。一般用于GET与POST请求

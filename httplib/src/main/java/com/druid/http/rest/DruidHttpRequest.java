@@ -29,7 +29,9 @@ public abstract class DruidHttpRequest extends BaseHttpRequest {
 
     @Override
     public void cancel() {
-        if (getRequestCall() != null)
+        if (getRequestCall() != null) {
+            cancelHand();
             getRequestCall().cancel();
+        }
     }
 }
